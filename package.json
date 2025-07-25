@@ -1,5 +1,5 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "send-email-personalizado",
   "version": "0.1.0",
   "description": "",
   "keywords": [
@@ -8,12 +8,12 @@
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Cristian",
+    "email": "cristianrodriguezlugo@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/cristianemek/SendEmailPersonalizado.git"
   },
   "engines": {
     "node": ">=20.15"
@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@types/nodemailer": "^6.4.17",
     "@typescript-eslint/parser": "~8.32.0",
     "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
@@ -51,5 +52,8 @@
   },
   "peerDependencies": {
     "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.5"
   }
 }
