@@ -103,9 +103,12 @@ export class CustomEmailSend implements INodeType {
 				displayName: 'Custom Headers (JSON)',
 				name: 'customHeaders',
 				type: 'string',
-				default: '',
-				placeholder: '{"List-Unsubscribe": "<mailto:unsubscribe@example.com>"}',
-				description: 'Additional headers in JSON format',
+				default:
+					'{\n  "List-Unsubscribe": "<mailto:unsubscribe@example.com>",\n  "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"\n}',
+				placeholder:
+					'{\n  "List-Unsubscribe": "<mailto:unsubscribe@example.com>",\n  "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"\n}',
+				description:
+					'Additional headers in JSON format. Puedes usar saltos de línea y espacios para mejor legibilidad. Valida tu JSON en https://jsonlint.com/',
 			},
 		],
 	};
