@@ -1,7 +1,7 @@
 {
-	"name": "send-email-personalizado",
+	"name": "n8n-nodes-send-email-personalizado",
 	"version": "0.1.0",
-	"description": "",
+	"description": "Enviar correos electrónicos con encabezados personalizados a través de SMTP",
 	"keywords": [
 		"n8n-community-node-package"
 	],

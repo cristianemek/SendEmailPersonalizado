@@ -4,20 +4,22 @@ import {
 	INodeTypeDescription,
 	IExecuteFunctions,
 	NodeConnectionType,
+	NodeApiError,
 } from 'n8n-workflow';
 
 import nodemailer from 'nodemailer';
 
 export class CustomEmailSend implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Enviar Email',
+		displayName: 'Enviar Email Personalizado',
 		name: 'customEmailSend',
-		icon: 'file:./custom-envelope.svg',
+		icon: 'fa:envelope',
 		group: ['output'],
 		version: 1,
-		description: 'Send emails using SMTP with custom headers',
+		description: 'Enviar correos electrónicos con encabezados personalizados a través de SMTP',
 		defaults: {
-			name: 'Send Email Custom',
+			name: 'Enviar email',
+			color: '#EA4B71',
 		},
 		inputs: ['main'] as NodeConnectionType[],
 		outputs: ['main'] as NodeConnectionType[],
@@ -25,6 +27,7 @@ export class CustomEmailSend implements INodeType {
 			{
 				name: 'smtp',
 				required: true,
+				testedBy: 'smtpConnectionTest',
 			},
 		],
 		properties: [
@@ -43,7 +46,7 @@ export class CustomEmailSend implements INodeType {
 				required: true,
 			},
 			{
-				displayName: 'Subject',
+				displayName: 'Asunto',
 				name: 'subject',
 				type: 'string',
 				default: '',
@@ -104,13 +107,12 @@ export class CustomEmailSend implements INodeType {
 				name: 'customHeaders',
 				type: 'string',
 				default:
-					'{"List-Unsubscribe": "<mailto:unsubscribe@example.com>","List-Unsubscribe-Post": "List-Unsubscribe=One-Click"}',
+					'{"List-Unsubscribe": "<>","List-Unsubscribe-Post": "List-Unsubscribe=One-Click"}',
 				placeholder: `{
   "List-Unsubscribe": "<mailto:unsubscribe@example.com>",
   "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
 }`,
-				description:
-					'Additional headers in JSON format. Puedes usar saltos de línea y espacios para mejor legibilidad. Valida tu JSON en https://jsonlint.com/',
+				description: 'Encabezados personalizados en formato JSON. Por ejemplo: {"List-Unsubscribe": "&lt;mailto:unsubscribe@example.com&gt;"}.',
 			},
 		],
 	};
@@ -146,7 +148,9 @@ export class CustomEmailSend implements INodeType {
 				try {
 					headers = JSON.parse(customHeadersStr);
 				} catch (error) {
-					throw new Error('Custom Headers must be valid JSON');
+					throw new NodeApiError(this.getNode(), {
+						message: 'Custom Headers must be valid JSON',
+					});
 				}
 			}
 
