@@ -5,6 +5,8 @@ import {
 	IExecuteFunctions,
 	NodeConnectionType,
 	NodeApiError,
+	IDataObject,
+	JsonObject,
 } from 'n8n-workflow';
 
 import nodemailer from 'nodemailer';
@@ -135,6 +137,7 @@ export class CustomEmailSend implements INodeType {
 		});
 
 		for (let i = 0; i < items.length; i++) {
+			try{
 			const from = this.getNodeParameter('fromEmail', i) as string;
 			const to = this.getNodeParameter('toEmail', i) as string;
 			const subject = this.getNodeParameter('subject', i) as string;
@@ -154,7 +157,7 @@ export class CustomEmailSend implements INodeType {
 				}
 			}
 
-			const mailOptions: any = {
+			const mailOptions: IDataObject = {
 				from,
 				to,
 				subject,
@@ -173,14 +176,23 @@ export class CustomEmailSend implements INodeType {
 			const info = await transporter.sendMail(mailOptions);
 
 			returnData.push({
-				json: {
-					success: true,
-					messageId: info.messageId,
-					envelope: info.envelope,
-				},
+				json: info as unknown as IDataObject,
+				pairedItem: { item: i },
 			});
+		} catch (error) {
+			if (this.continueOnFail()) {
+			returnData.push({
+				json: {
+					error: error.message,
+				},
+				pairedItem: { item: i },
+			});
+			continue;
 		}
-
-		return [returnData];
+		delete error.cert;
+		throw new NodeApiError(this.getNode(), error as JsonObject);
+		}
 	}
+	return [returnData];
+}
 }
