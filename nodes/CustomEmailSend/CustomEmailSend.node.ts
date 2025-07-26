@@ -10,9 +10,9 @@ import nodemailer from 'nodemailer';
 
 export class CustomEmailSend implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Custom Email Send',
+		displayName: 'Enviar Email',
 		name: 'customEmailSend',
-		icon: 'fa:envelope',
+		icon: 'file:./custom-envelope.svg',
 		group: ['output'],
 		version: 1,
 		description: 'Send emails using SMTP with custom headers',
@@ -104,9 +104,11 @@ export class CustomEmailSend implements INodeType {
 				name: 'customHeaders',
 				type: 'string',
 				default:
-					'{\n  "List-Unsubscribe": "<mailto:unsubscribe@example.com>",\n  "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"\n}',
-				placeholder:
-					'{\n  "List-Unsubscribe": "<mailto:unsubscribe@example.com>",\n  "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"\n}',
+					'{"List-Unsubscribe": "<mailto:unsubscribe@example.com>","List-Unsubscribe-Post": "List-Unsubscribe=One-Click"}',
+				placeholder: `{
+  "List-Unsubscribe": "<mailto:unsubscribe@example.com>",
+  "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
+}`,
 				description:
 					'Additional headers in JSON format. Puedes usar saltos de línea y espacios para mejor legibilidad. Valida tu JSON en https://jsonlint.com/',
 			},
