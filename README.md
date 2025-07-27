@@ -6,7 +6,7 @@ Este paquete incluye un nodo personalizado para [n8n](https://n8n.io) que permit
 
 ## 🎯 Propósito principal
 
-Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-Unsubscribe** en tus envíos, permitiendo agregarla fácilmente mediante un botón (toggle) en la configuración del nodo. Así, puedes cumplir con los requisitos de plataformas como Gmail y Outlook para la gestión de bajas automáticas en listas de correo.
+Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-Unsubscribe** en tus envíos, permitiendo agregarla fácilmente desde el campo de encabezados personalizados. Así, puedes cumplir con los requisitos de plataformas como Gmail y Outlook para la gestión de bajas automáticas en listas de correo.
 
 ---
 
@@ -14,7 +14,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 
 - Envío de correos por SMTP usando credenciales de n8n
 - Soporte para **cabeceras personalizadas** en formato JSON (ejemplo: `List-Unsubscribe`)
-- **Botón para agregar automáticamente las cabeceras List-Unsubscribe y List-Unsubscribe-Post** si el campo de cabeceras está vacío
+- Por defecto, el campo de encabezados personalizados incluye las cabeceras `List-Unsubscribe` y `List-Unsubscribe-Post` recomendadas para facilitar la baja automática
 - Soporte para:
   - Texto y/o HTML en el cuerpo del correo
   - Adjuntos (archivos y eventos de calendario `.ics`)
@@ -38,14 +38,13 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
    - Formato de correo (`emailFormat`: texto, HTML o ambos)
    - Mensaje (`text` y/o `html`)
 3. Opcionalmente, configura:
-   - **Cabeceras personalizadas** en formato JSON:
+   - **Cabeceras personalizadas** en formato JSON (por defecto ya incluye List-Unsubscribe):
      ```json
      {
        "List-Unsubscribe": "<mailto:unsubscribe@tudominio.com>",
        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
      }
      ```
-   - Activa el **botón "Agregar encabezados List-Unsubscribe"** para que se añadan automáticamente si el campo anterior está vacío.
    - Adjuntos: rutas de archivos separados por coma o contenido de evento de calendario (ICS).
    - CC/BCC: correos separados por coma.
    - Reply-To: dirección de respuesta.
@@ -58,8 +57,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 
 ## ⚙️ Opciones disponibles
 
-- **Agregar encabezados List-Unsubscribe**: Toggle para añadir automáticamente las cabeceras recomendadas si el campo de cabeceras personalizadas está vacío.
-- **Encabezados personalizados (JSON)**: Permite definir cualquier cabecera extra.
+- **Encabezados personalizados (JSON)**: Permite definir cualquier cabecera extra. Por defecto incluye las cabeceras recomendadas para List-Unsubscribe.
 - **Adjuntos**: Rutas de archivos o binarios de n8n.
 - **Evento de calendario (ICS)**: Pega el contenido de un archivo `.ics` para enviar invitaciones de calendario.
 - **Correo CC/BCC**: Para enviar copias y copias ocultas.
@@ -101,7 +99,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 
 ## 📝 Notas
 
-- Si usas el botón para Activar encabezados personalizados, se añadirán automáticamente las cabeceras `List-Unsubscribe` y `List-Unsubscribe-Post` recomendadas para facilitar la baja automática en clientes de correo como Gmail y Outlook,si no defines otras.
+- El campo de encabezados personalizados incluye por defecto las cabeceras `List-Unsubscribe` y `List-Unsubscribe-Post` recomendadas para facilitar la baja automática en clientes de correo como Gmail y Outlook. Puedes editarlas o borrarlas según tus necesidades.
 - Puedes ingresar múltiples correos en los campos `to`, `cc` y `bcc` separados por coma.
 - Para adjuntos binarios, usa los helpers de n8n o rutas absolutas.
 

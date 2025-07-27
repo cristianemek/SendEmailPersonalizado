@@ -59,7 +59,7 @@ export class CustomEmailSend implements INodeType {
 				default: '',
 			},
 			{
-				displayName: 'Formato de correo',
+				displayName: 'Formato De Correo',
 				name: 'emailFormat',
 				type: 'options',
 				options: [
@@ -110,14 +110,14 @@ export class CustomEmailSend implements INodeType {
 				},
 			},
 			{
-				displayName: 'Activar encabezados personalizados',
+				displayName: 'Activar Encabezados Personalizados',
 				name: 'enableCustomHeaders',
 				type: 'boolean',
 				default: false,
-				description: 'Muestra el campo para definir encabezados personalizados en formato JSON.',
+				description: 'Whether to show the field to define custom headers in JSON format',
 			},
 			{
-				displayName: 'Encabezados personalizados (JSON)',
+				displayName: 'Encabezados Personalizados (JSON)',
 				name: 'customHeaders',
 				type: 'string',
 				typeOptions: {
@@ -132,7 +132,7 @@ export class CustomEmailSend implements INodeType {
   "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
 }`,
 				description:
-					'Encabezados personalizados en formato JSON. Por ejemplo: {"List-Unsubscribe": "<mailto:unsubscribe@example.com>"}. Puedes editar o borrar estos encabezados si lo deseas.',
+					'Encabezados personalizados en formato JSON. Por ejemplo: {"List-Unsubscribe": "&lt;mailto:unsubscribe@example.com&gt;"}. Puedes editar o borrar estos encabezados si lo deseas.',
 				displayOptions: {
 					show: {
 						enableCustomHeaders: [true],
@@ -152,17 +152,7 @@ export class CustomEmailSend implements INodeType {
 						type: 'string',
 						default: '',
 						description:
-							'Ruta de los archivos adjuntos separados por comas. Por ejemplo: /ruta/a/archivo1,/ruta/a/archivo2',
-					},
-					{
-						displayName: 'Correo CC',
-						name: 'ccEmail',
-						type: 'string',
-						default: '',
-						placeholder: 'cc@ejemplo.com, cc2@ejemplo.com',
-						description:
-							'Dirección de correo electrónico del destinatario en copia (CC) ' +
-							'(separada por comas si es necesario enviar a varios destinatarios)',
+							'Ruta de los archivos adjuntos separados por comas. Por ejemplo: /ruta/a/archivo1,/ruta/a/archivo2.',
 					},
 					{
 						displayName: 'Correo BCC',
@@ -171,38 +161,52 @@ export class CustomEmailSend implements INodeType {
 						default: '',
 						placeholder: 'bcc@ejemplo.com, bcc2@ejemplo.com',
 						description:
-							'Dirección de correo electrónico del destinatario en copia oculta (BCC) ' +
-							'(separada por comas si es necesario enviar a varios destinatarios)',
+							'Dirección de correo electrónico del destinatario en copia oculta (BCC) (separada por comas si es necesario enviar a varios destinatarios)',
 					},
 					{
-						displayName: 'Ignorar problemas SSL (Inseguro)',
-						name: 'allowUnauthorizedCerts',
-						type: 'boolean',
-						default: false,
-						description: 'Permitir conexión aunque no se pueda validar el certificado SSL',
-					},
-					{
-						displayName: 'Reply-To Email',
-						name: 'replyTo',
+						displayName: 'Correo CC',
+						name: 'ccEmail',
 						type: 'string',
 						default: '',
-						placeholder: 'info@ejemplo.com',
-						description: 'Dirección de correo electrónico para responder',
+						placeholder: 'cc@ejemplo.com, cc2@ejemplo.com',
+						description:
+							'Dirección de correo electrónico del destinatario en copia (CC) (separada por comas si es necesario enviar a varios destinatarios)',
 					},
 					{
-						displayName: 'Fecha personalizada',
-						name: 'date',
-						type: 'dateTime',
-						default: '',
-						description: 'Fecha personalizada para el correo.',
-					},
-					{
-						displayName: 'Evento de calendario (ICS)',
+						displayName: 'Evento De Calendario (ICS)',
 						name: 'calendarEvent',
 						type: 'string',
 						default: '',
 						placeholder: 'Pega aquí el contenido ICS',
-						description: 'Contenido del archivo .ics para enviar como invitación de calendario.',
+						description: 'Contenido del archivo .ics para enviar como invitación de calendario',
+					},
+					{
+						displayName: 'Fecha Personalizada',
+						name: 'date',
+						type: 'dateTime',
+						default: '',
+						description: 'Fecha personalizada para el correo',
+					},
+					{
+						displayName: 'Ignorar Problemas SSL (Inseguro)',
+						name: 'allowUnauthorizedCerts',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to connect even if SSL certificate validation is not possible',
+					},
+					{
+						displayName: 'In-Reply-To',
+						name: 'inReplyTo',
+						type: 'string',
+						default: '',
+						description: 'Message-ID al que responde este correo',
+					},
+					{
+						displayName: 'Incluir créditos del autor',
+						name: 'appendCredits',
+						type: 'boolean',
+						default: false,
+						description: 'Whether to add a credit line at the end of the email',
 					},
 					{
 						displayName: 'Prioridad',
@@ -214,28 +218,22 @@ export class CustomEmailSend implements INodeType {
 							{ name: 'Baja', value: 'low' },
 						],
 						default: 'normal',
-						description: 'Prioridad del correo electrónico.',
-					},
-					{
-						displayName: 'In-Reply-To',
-						name: 'inReplyTo',
-						type: 'string',
-						default: '',
-						description: 'Message-ID al que responde este correo.',
+						description: 'Prioridad del correo electrónico',
 					},
 					{
 						displayName: 'Referencias',
 						name: 'references',
 						type: 'string',
 						default: '',
-						description: 'IDs de mensajes previos, separados por comas.',
+						description: 'IDs de mensajes previos, separados por comas',
 					},
 					{
-						displayName: 'Incluir créditos del autor',
-						name: 'appendCredits',
-						type: 'boolean',
-						default: false,
-						description: 'Si se activa, agrega una línea de crédito al final del correo.',
+						displayName: 'Reply-To Email',
+						name: 'replyTo',
+						type: 'string',
+						default: '',
+						placeholder: 'info@ejemplo.com',
+						description: 'Dirección de correo electrónico para responder',
 					},
 				],
 			},
@@ -358,16 +356,11 @@ export class CustomEmailSend implements INodeType {
 					options.calendarEvent.trim() &&
 					options.calendarEvent.includes('BEGIN:VCALENDAR')
 				) {
-					const calendarAttachment = {
+					mailOptions.icalEvent = {
 						filename: 'event.ics',
-						content: options.calendarEvent,
-						contentType: 'text/calendar; method=REQUEST; charset=UTF-8',
-						contentDisposition: 'inline',
+						method: 'REQUEST',
+						content: options.calendarEvent as string,
 					};
-					if (!mailOptions.attachments) {
-						mailOptions.attachments = [];
-					}
-					(mailOptions.attachments as any[]).push(calendarAttachment);
 				}
 
 				if (options.appendCredits) {
