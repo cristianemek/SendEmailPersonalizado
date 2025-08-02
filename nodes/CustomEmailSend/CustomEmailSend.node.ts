@@ -179,6 +179,20 @@ export class CustomEmailSend implements INodeType {
 				},
 			},
 			{
+				displayName: 'Prefijo del asunto',
+				name: 'testSubjectPrefix',
+				type: 'string',
+				default: '[TEST]',
+				placeholder: '[TEST] (vacío = sin prefijo)',
+				description:
+					'Prefijo que se agregará al asunto. Si está vacío, se enviará el asunto original sin modificar.',
+				displayOptions: {
+					show: {
+						testMode: [true],
+					},
+				},
+			},
+			{
 				displayName: 'Opciones',
 				name: 'options',
 				type: 'collection',
@@ -311,8 +325,10 @@ export class CustomEmailSend implements INodeType {
 				const emailFormat = this.getNodeParameter('emailFormat', i) as string;
 				const text = this.getNodeParameter('text', i, '') as string;
 				const html = this.getNodeParameter('html', i, '') as string;
+
 				const testMode = this.getNodeParameter('testMode', i, false) as boolean;
 				const testEmail = this.getNodeParameter('testEmail', i, '') as string;
+				const testSubjectPrefix = this.getNodeParameter('testSubjectPrefix', i, '[TEST]') as string;
 
 				const customHeadersStr = this.getNodeParameter('customHeaders', i, '') as string;
 				const options = this.getNodeParameter('options', i, {}) as IDataObject;
@@ -429,7 +445,9 @@ export class CustomEmailSend implements INodeType {
 					delete mailOptions.bcc;
 					delete mailOptions.replyTo;
 
-					mailOptions.subject = `[PRUEBA] ${subject}`;
+					mailOptions.subject = testSubjectPrefix.trim()
+						? `${testSubjectPrefix.trim()} ${subject}`
+						: subject;
 				}
 
 				const info = await transporter.sendMail(mailOptions);
