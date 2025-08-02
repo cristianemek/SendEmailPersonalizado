@@ -1,5 +1,9 @@
 # n8n-nodes-custom-email-send
 
+[![npm version](https://badge.fury.io/js/n8n-nodes-send-email-personalizado.svg)](https://www.npmjs.com/package/n8n-nodes-send-email-personalizado)
+[![npm downloads](https://img.shields.io/npm/dt/n8n-nodes-send-email-personalizado.svg)](https://www.npmjs.com/package/n8n-nodes-send-email-personalizado)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Este paquete incluye un nodo personalizado para [n8n](https://n8n.io) que permite **enviar correos electrónicos avanzados usando credenciales SMTP** ya configuradas en n8n, con soporte para **cabeceras personalizadas** y funcionalidades orientadas principalmente a la gestión de listas de correo y cumplimiento de buenas prácticas de email marketing.
 
 ---
