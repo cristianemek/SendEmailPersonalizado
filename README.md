@@ -116,7 +116,22 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 
 ## 📋 Changelog
 
-### v1.1.0 (02-08-2025)
+### v1.2.0 (03-08-2025) 🚧 **[EN TESTING]**
+**Refactorización mayor - Código limpio y modular:**
+- 🏗️ **Arquitectura mejorada**: Código completamente refactorizado siguiendo principios de clean code
+- 📁 **Separación de responsabilidades**: Código organizado en módulos (`email.utils.ts`, `email.types.ts`)
+- 🔧 **Funciones de utilidad**: 9 funciones puras y reutilizables para procesamiento de emails
+- 🛡️ **TypeScript mejorado**: Tipado más robusto y interfaces bien definidas
+- 🧪 **Preparado para testing**: Estructura modular lista para pruebas unitarias
+- 🔍 **Mantenibilidad**: Código más limpio, legible y fácil de mantener
+
+**Mejoras técnicas:**
+- ✨ Funciones extraídas: `parseEmails`, `validateEmail`, `buildEmailContent`, etc.
+- 📦 Constantes organizadas: `EMAIL_FORMATS`, `PRIORITIES`, `DEFAULT_HEADERS`
+
+> **⚠️ Nota**: Esta versión está en fase de testing. Aunque mantiene total compatibilidad, se recomienda probar en entorno de desarrollo antes de usar en producción.
+
+### v1.1.0
 **Nuevas funcionalidades:**
 - ✨ **Modo de prueba**: Permite enviar emails de prueba a una dirección específica sin afectar los destinatarios reales
 - 🎯 **Prefijo personalizable**: El modo de prueba permite configurar un prefijo personalizado para el asunto (por defecto `[TEST]`) o dejarlo vacío para mantener el asunto original
