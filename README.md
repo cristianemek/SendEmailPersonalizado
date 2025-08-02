@@ -48,6 +48,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
      }
      ```
    - Adjuntos: rutas de archivos separados por coma o contenido de evento de calendario (ICS).
+   - **Modo de prueba**: Activa el modo de prueba con email específico y prefijo personalizable para el asunto.
    - CC/BCC: correos separados por coma.
    - Reply-To: dirección de respuesta.
    - Fecha personalizada.
@@ -60,6 +61,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 ## ⚙️ Opciones disponibles
 
 - **Encabezados personalizados (JSON)**: Permite definir cualquier cabecera extra. Por defecto incluye las cabeceras recomendadas para List-Unsubscribe.
+- **Modo de prueba**: Envía emails de prueba a una dirección específica sin afectar destinatarios reales, con prefijo personalizable en el asunto (por defecto `[TEST]`).
 - **Adjuntos**: Rutas de archivos o binarios de n8n.
 - **Evento de calendario (ICS)**: Pega el contenido de un archivo `.ics` para enviar invitaciones de calendario.
 - **Correo CC/BCC**: Para enviar copias y copias ocultas.
@@ -70,9 +72,8 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 - **In-Reply-To**: Message-ID al que responde este correo.
 - **References**: IDs de mensajes previos para hilos.
 - **Incluir créditos del autor**: Añade una línea de crédito al final del mensaje (opcional).
-- **Modo de prueba**: Envía emails de prueba sin afectar destinatarios reales, con prefijo [PRUEBA] en el asunto
 
----
+--- 
 
 ## 🚀 Cómo agregar este nodo a tus flujos de n8n (Community Nodes)
 
@@ -114,11 +115,12 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 ### v1.1.0 (02-08-2025)
 **Nuevas funcionalidades:**
 - ✨ **Modo de prueba**: Permite enviar emails de prueba a una dirección específica sin afectar los destinatarios reales
+- 🎯 **Prefijo personalizable**: El modo de prueba permite configurar un prefijo personalizado para el asunto (por defecto `[TEST]`) o dejarlo vacío para mantener el asunto original
 - 🔧 **Validación mejorada**: Validación más robusta de direcciones de email
-- 🎯 **Mejor organización**: Los campos están mejor organizados y el toggle de encabezados personalizados funciona correctamente
+- 📝 **Campo JSON mejorado**: Los encabezados personalizados ahora usan tipo JSON para mejor validación y formato
 
 **Mejoras:**
-- 📧 El modo de prueba agrega automáticamente `[PRUEBA]` al asunto
+- 📧 El modo de prueba tiene prefijo configurable y email de prueba obligatorio
 - 🗑️ En modo de prueba se eliminan CC, BCC y Reply-To para evitar envíos accidentales
 - 📊 La respuesta incluye información sobre si se usó modo de prueba y los destinatarios originales
 
