@@ -150,6 +150,35 @@ export class CustomEmailSend implements INodeType {
 				},
 			},
 			{
+				displayName: 'Modo de prueba',
+				name: 'testMode',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to send test emails to a specific address instead of real recipients',
+			},
+			{
+				displayName: 'Email de prueba',
+				name: 'testEmail',
+				type: 'string',
+				default: '',
+				placeholder: 'test@example.com',
+				description: 'Email donde se enviarán las pruebas (reemplaza a To, CC y BCC)',
+				displayOptions: {
+					show: {
+						testMode: [true],
+					},
+				},
+				typeOptions: {
+					validation: {
+						validate: (value: string) => {
+							if (!value.trim()) return false;
+							const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+							return emailRegex.test(value.trim());
+						},
+					},
+				},
+			},
+			{
 				displayName: 'Opciones',
 				name: 'options',
 				type: 'collection',
@@ -392,10 +421,30 @@ export class CustomEmailSend implements INodeType {
 					mailOptions.replyTo = parseEmails(options.replyTo);
 				}
 
+				if (options.testMode && options.testEmail) {
+					mailOptions.to = options.testEmail;
+					delete mailOptions.cc;
+					delete mailOptions.bcc;
+					delete mailOptions.replyTo;
+
+					mailOptions.subject = `[PRUEBA] ${subject}`;
+				}
+
 				const info = await transporter.sendMail(mailOptions);
 
 				returnData.push({
-					json: info as unknown as IDataObject,
+					json: {
+						...info,
+						testMode: !!options.testMode,
+						originalRecipient: options.testMode
+							? {
+									to,
+									cc: options.ccEmail || '',
+									bcc: options.bccEmail || '',
+									replyTo: options.replyTo || '',
+								}
+							: undefined,
+					} as unknown as IDataObject,
 					pairedItem: { item: i },
 				});
 			} catch (error) {
