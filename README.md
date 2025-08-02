@@ -111,7 +111,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 
 ## 📋 Changelog
 
-### v1.1.0 (2025-01-27)
+### v1.1.0 (02-08-2025)
 **Nuevas funcionalidades:**
 - ✨ **Modo de prueba**: Permite enviar emails de prueba a una dirección específica sin afectar los destinatarios reales
 - 🔧 **Validación mejorada**: Validación más robusta de direcciones de email
