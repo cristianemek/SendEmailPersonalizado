@@ -51,6 +51,16 @@ export class CustomEmailSend implements INodeType {
 				placeholder: 'to@example.com, to2@example.com',
 				description:
 					'Dirección de correo electrónico del destinatario, separada por comas si es necesario enviar a varios destinatarios',
+				typeOptions: {
+					validation: {
+						validate: (value: string) => {
+							if (!value.trim()) return false;
+							const emails = value.split(',').map((email) => email.trim());
+							const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+							return emails.every((email) => emailRegex.test(email) && email.length <= 254);
+						},
+					},
+				},
 			},
 			{
 				displayName: 'Asunto',
@@ -119,7 +129,7 @@ export class CustomEmailSend implements INodeType {
 			{
 				displayName: 'Encabezados Personalizados (JSON)',
 				name: 'customHeaders',
-				type: 'string',
+				type: 'json',
 				typeOptions: {
 					rows: 5,
 				},
