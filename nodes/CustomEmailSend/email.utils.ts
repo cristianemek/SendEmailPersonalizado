@@ -2,7 +2,7 @@ import { IDataObject, NodeApiError } from 'n8n-workflow';
 import { AttachmentInfo, EmailValidationOptions } from './email.types';
 
 /**
- * Parse and validate email addresses from a comma-separated string
+ * Parsea y valida direcciones de email de una cadena separada por comas
  */
 export const parseEmails = (input: string | undefined): string | undefined =>
 	typeof input === 'string'
@@ -14,7 +14,7 @@ export const parseEmails = (input: string | undefined): string | undefined =>
 		: undefined;
 
 /**
- * Validate a single email address
+ * Valida una sola dirección de email
  */
 export const validateEmail = (
 	email: string, 
@@ -31,7 +31,7 @@ export const validateEmail = (
 };
 
 /**
- * Validate a comma-separated list of email addresses
+ * Valida una lista de direcciones de email separadas por comas
  */
 export const validateEmailList = (
 	value: string, 
@@ -44,7 +44,7 @@ export const validateEmailList = (
 };
 
 /**
- * Build email content based on format selection
+ * Construye el contenido del email basado en la selección de formato
  */
 export const buildEmailContent = (
 	emailFormat: string, 
@@ -65,14 +65,14 @@ export const buildEmailContent = (
 			content.html = html;
 			break;
 		default:
-			content.html = html; // fallback to HTML
+			content.html = html;
 	}
 	
 	return content;
 };
 
 /**
- * Parse custom headers from JSON string
+ * Parsea headers personalizados desde una cadena JSON
  */
 export const parseCustomHeaders = (
 	customHeadersStr: string, 
@@ -83,7 +83,6 @@ export const parseCustomHeaders = (
 	try {
 		const headers = JSON.parse(customHeadersStr);
 		
-		// Validate that headers is an object
 		if (typeof headers !== 'object' || headers === null || Array.isArray(headers)) {
 			throw new Error('Headers must be a valid JSON object');
 		}
@@ -97,7 +96,7 @@ export const parseCustomHeaders = (
 };
 
 /**
- * Build attachments from comma-separated property names
+ * Construye adjuntos desde nombres de propiedades separados por comas
  */
 export const buildAttachments = async (
 	adjuntosStr: string,
@@ -120,7 +119,7 @@ export const buildAttachments = async (
 			});
 		} catch (error) {
 			console.warn(`Failed to process attachment '${propertyName}':`, error.message);
-			// Continue processing other attachments
+			// Continúa procesando otros adjuntos
 		}
 	}
 
@@ -128,7 +127,7 @@ export const buildAttachments = async (
 };
 
 /**
- * Apply test mode settings to mail options
+ * Aplica configuración de modo de prueba a las opciones de correo
  */
 export const applyTestMode = (
 	mailOptions: IDataObject, 
@@ -139,7 +138,7 @@ export const applyTestMode = (
 ): void => {
 	if (!testMode || !testEmail) return;
 	
-	// Store original recipients for reference
+	// Almacena destinatarios originales para referencia
 	const originalRecipients = {
 		to: mailOptions.to,
 		cc: mailOptions.cc,
@@ -147,31 +146,26 @@ export const applyTestMode = (
 		replyTo: mailOptions.replyTo,
 	};
 	
-	// Override recipients
 	mailOptions.to = testEmail;
 	delete mailOptions.cc;
 	delete mailOptions.bcc;
 	delete mailOptions.replyTo;
 
-	// Add test prefix to subject if provided
 	if (testSubjectPrefix.trim()) {
 		mailOptions.subject = `${testSubjectPrefix.trim()} ${originalSubject}`;
 	}
 	
-	// Store original recipients in a custom header for reference
 	mailOptions.originalRecipients = originalRecipients;
 };
 
 /**
- * Apply additional email options (priority, dates, credits, etc.)
+ * Aplica opciones adicionales de email (prioridad, fechas, créditos, etc.)
  */
 export const applyEmailOptions = (mailOptions: IDataObject, options: IDataObject): void => {
-	// Priority
 	if (options.priority) {
 		mailOptions.priority = options.priority;
 	}
 
-	// Reply references
 	if (options.inReplyTo) {
 		mailOptions.inReplyTo = options.inReplyTo;
 	}
@@ -183,7 +177,6 @@ export const applyEmailOptions = (mailOptions: IDataObject, options: IDataObject
 			.filter(Boolean);
 	}
 
-	// Date
 	if (options.date) {
 		try {
 			mailOptions.date = new Date(options.date as string);
@@ -192,7 +185,6 @@ export const applyEmailOptions = (mailOptions: IDataObject, options: IDataObject
 		}
 	}
 
-	// Calendar event
 	if (
 		typeof options.calendarEvent === 'string' &&
 		options.calendarEvent.trim() &&
@@ -205,7 +197,6 @@ export const applyEmailOptions = (mailOptions: IDataObject, options: IDataObject
 		};
 	}
 
-	// Credits
 	if (options.appendCredits) {
 		const creditText = '\\n\\n---\\nDesarrollado por Cristianemek';
 		const creditHtml = '<br><br>---<br>Desarrollado por Cristianemek';
@@ -218,7 +209,6 @@ export const applyEmailOptions = (mailOptions: IDataObject, options: IDataObject
 		}
 	}
 
-	// Email addresses
 	if (typeof options.ccEmail === 'string' && options.ccEmail.trim()) {
 		mailOptions.cc = parseEmails(options.ccEmail);
 	}
@@ -231,14 +221,13 @@ export const applyEmailOptions = (mailOptions: IDataObject, options: IDataObject
 };
 
 /**
- * Process email sending for a single item
+ * Procesa el envío de email para un único item
  */
 export const processEmailItem = async (
 	executeFunctions: any,
 	transporter: any,
 	itemIndex: number
 ): Promise<any> => {
-	// Extract parameters
 	const from = executeFunctions.getNodeParameter('fromEmail', itemIndex) as string;
 	const to = executeFunctions.getNodeParameter('toEmail', itemIndex) as string;
 	const subject = executeFunctions.getNodeParameter('subject', itemIndex) as string;
@@ -254,7 +243,6 @@ export const processEmailItem = async (
 	const enableCustomHeaders = executeFunctions.getNodeParameter('enableCustomHeaders', itemIndex, false) as boolean;
 	const options = executeFunctions.getNodeParameter('options', itemIndex, {}) as IDataObject;
 
-	// Build mail options
 	const mailOptions: IDataObject = {
 		from,
 		to: parseEmails(to),
@@ -262,7 +250,6 @@ export const processEmailItem = async (
 		...buildEmailContent(emailFormat, text, html),
 	};
 
-	// Apply custom headers
 	if (enableCustomHeaders) {
 		const headers = parseCustomHeaders(customHeadersStr, executeFunctions.getNode());
 		if (Object.keys(headers).length > 0) {
@@ -272,7 +259,6 @@ export const processEmailItem = async (
 		}
 	}
 
-	// Handle attachments
 	const items = executeFunctions.getInputData();
 	if (options.adjuntos && items[itemIndex].binary) {
 		const attachments = await buildAttachments(
@@ -285,13 +271,10 @@ export const processEmailItem = async (
 		}
 	}
 
-	// Apply additional options
 	applyEmailOptions(mailOptions, options);
 
-	// Apply test mode
 	applyTestMode(mailOptions, testMode, testEmail, testSubjectPrefix, subject);
 
-	// Send email
 	const info = await transporter.sendMail(mailOptions);
 
 	return { info, testMode, options, to };
