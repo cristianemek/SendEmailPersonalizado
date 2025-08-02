@@ -150,14 +150,14 @@ export class CustomEmailSend implements INodeType {
 				},
 			},
 			{
-				displayName: 'Modo de prueba',
+				displayName: 'Modo De Prueba',
 				name: 'testMode',
 				type: 'boolean',
 				default: false,
 				description: 'Whether to send test emails to a specific address instead of real recipients',
 			},
 			{
-				displayName: 'Email de prueba',
+				displayName: 'Email De Prueba',
 				name: 'testEmail',
 				type: 'string',
 				default: '',
@@ -311,6 +311,8 @@ export class CustomEmailSend implements INodeType {
 				const emailFormat = this.getNodeParameter('emailFormat', i) as string;
 				const text = this.getNodeParameter('text', i, '') as string;
 				const html = this.getNodeParameter('html', i, '') as string;
+				const testMode = this.getNodeParameter('testMode', i, false) as boolean;
+				const testEmail = this.getNodeParameter('testEmail', i, '') as string;
 
 				const customHeadersStr = this.getNodeParameter('customHeaders', i, '') as string;
 				const options = this.getNodeParameter('options', i, {}) as IDataObject;
@@ -421,8 +423,8 @@ export class CustomEmailSend implements INodeType {
 					mailOptions.replyTo = parseEmails(options.replyTo);
 				}
 
-				if (options.testMode && options.testEmail) {
-					mailOptions.to = options.testEmail;
+				if (testMode && testEmail) {
+					mailOptions.to = testEmail;
 					delete mailOptions.cc;
 					delete mailOptions.bcc;
 					delete mailOptions.replyTo;
@@ -435,8 +437,8 @@ export class CustomEmailSend implements INodeType {
 				returnData.push({
 					json: {
 						...info,
-						testMode: !!options.testMode,
-						originalRecipient: options.testMode
+						testMode: !!testMode,
+						originalRecipient: testMode
 							? {
 									to,
 									cc: options.ccEmail || '',
