@@ -14,6 +14,8 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 
 - Envío de correos por SMTP usando credenciales de n8n
 - Soporte para **cabeceras personalizadas** en formato JSON (ejemplo: `List-Unsubscribe`)
+- **Modo de prueba**: Envía correos de prueba a una dirección específica sin afectar destinatarios reales
+- **Validación robusta**: Validación automática de formato de emails
 - Por defecto, el campo de encabezados personalizados incluye las cabeceras `List-Unsubscribe` y `List-Unsubscribe-Post` recomendadas para facilitar la baja automática
 - Soporte para:
   - Texto y/o HTML en el cuerpo del correo
@@ -68,6 +70,7 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 - **In-Reply-To**: Message-ID al que responde este correo.
 - **References**: IDs de mensajes previos para hilos.
 - **Incluir créditos del autor**: Añade una línea de crédito al final del mensaje (opcional).
+- **Modo de prueba**: Envía emails de prueba sin afectar destinatarios reales, con prefijo [PRUEBA] en el asunto
 
 ---
 
@@ -102,6 +105,25 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 - El campo de encabezados personalizados incluye por defecto las cabeceras `List-Unsubscribe` y `List-Unsubscribe-Post` recomendadas para facilitar la baja automática en clientes de correo como Gmail y Outlook. Puedes editarlas o borrarlas según tus necesidades.
 - Puedes ingresar múltiples correos en los campos `to`, `cc` y `bcc` separados por coma.
 - Para adjuntos binarios, usa los helpers de n8n o rutas absolutas.
+
+---
+---
+
+## 📋 Changelog
+
+### v1.1.0 (2025-01-27)
+**Nuevas funcionalidades:**
+- ✨ **Modo de prueba**: Permite enviar emails de prueba a una dirección específica sin afectar los destinatarios reales
+- 🔧 **Validación mejorada**: Validación más robusta de direcciones de email
+- 🎯 **Mejor organización**: Los campos están mejor organizados y el toggle de encabezados personalizados funciona correctamente
+
+**Mejoras:**
+- 📧 El modo de prueba agrega automáticamente `[PRUEBA]` al asunto
+- 🗑️ En modo de prueba se eliminan CC, BCC y Reply-To para evitar envíos accidentales
+- 📊 La respuesta incluye información sobre si se usó modo de prueba y los destinatarios originales
+
+### v1.0.1
+- 🚀 Versión inicial con soporte para encabezados personalizados y funcionalidades básicas de SMTP
 
 ---
 
