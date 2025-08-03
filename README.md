@@ -114,7 +114,19 @@ Este nodo fue creado principalmente para facilitar el uso de la cabecera **List-
 ---
 ---
 
-## 📋 Changelog
+## � Working On
+
+**🧪 Testing con Jest (En progreso)**
+- Implementación de tests unitarios para todas las funciones de utilidad
+- Cobertura completa de las 9 funciones principales (`parseEmails`, `validateEmail`, `buildEmailContent`, etc.)
+- Tests de casos extremos y validación de errores
+- Configuración de Jest para TypeScript
+
+*El objetivo es asegurar la calidad y confiabilidad del código refactorizado antes de la release final de v1.2.0.*
+
+---
+
+## �📋 Changelog
 
 ### v1.2.0 (03-08-2025) 🚧 **[EN TESTING]**
 **Refactorización mayor - Código limpio y modular:**
